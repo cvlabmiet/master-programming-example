@@ -12,11 +12,11 @@ pram = Pram()
 lram = Lram()
 
 lram[:] = bytes(test_vector)
-pram[:] = b'[u16:0]add(u8:0, u8:100)'
+pram[:] = b'[u16:200:400]add(u8:0, u8:100)'
 
 pram.run(lram)
 
-view = array.array('H', lram)
+view = memoryview(lram)[200:400].cast('H')
 error_count = 0
 for x in range(len(view)):
     if view[x] != test_vector[x] + test_vector[x + 100]:

@@ -38,7 +38,7 @@ class CpuEmu(fuse.Operations):
     def read(self, path, size, offset, fh):
         if path == '/ctrl':
             val = self.files[path].wait()
-            return bytes('\n'.join(map(str, val)).encode('utf-8'))
+            return bytes(''.join(map(lambda x: str(x) + '\n', val)).encode('utf-8'))
 
         return bytes(self.files[path][offset:offset + size])
 
